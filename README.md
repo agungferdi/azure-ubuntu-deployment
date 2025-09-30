@@ -5,7 +5,7 @@ This repository contains automation scripts to set up a complete Laravel develop
 ## 📋 Requirements Met
 
 ✅ **Server Environment:**
-- PHP 8.1
+- PHP 8.2
 - Nginx 1.18/1.21
 - MariaDB 10
 - Composer 2.2
@@ -78,7 +78,7 @@ ubuntu-vm-laravel-setup/
 - **Docker**: Latest stable version with user permissions
 
 ### Server Stack
-- **PHP 8.1** with extensions: mysql, xml, curl, gd, mbstring, zip, intl, bcmath, soap, redis
+- **PHP 8.2** with extensions: mysql, xml, curl, gd, mbstring, zip, intl, bcmath, soap, redis
 - **Nginx**: Latest stable with Laravel configuration
 - **MariaDB 10**: With secure installation and Laravel database setup
 - **Composer 2.2**: Global installation
@@ -154,13 +154,13 @@ After deployment, verify these features work:
 ```bash
 # Restart web server
 sudo systemctl restart nginx
-sudo systemctl restart php8.1-fpm
+sudo systemctl restart php8.2-fpm
 
 # Restart database
 sudo systemctl restart mariadb
 
 # Check service status
-sudo systemctl status nginx php8.1-fpm mariadb
+sudo systemctl status nginx php8.2-fpm mariadb
 ```
 
 ### Laravel Commands
@@ -186,11 +186,11 @@ sudo tail -f /var/log/nginx/error.log
 sudo tail -f /var/log/nginx/access.log
 
 # PHP logs
-sudo tail -f /var/log/php8.1-fpm.log
+sudo tail -f /var/log/php8.2-fpm.log
 
 # System logs
 sudo journalctl -f -u nginx
-sudo journalctl -f -u php8.1-fpm
+sudo journalctl -f -u php8.2-fpm
 ```
 
 ## 🔧 Troubleshooting
@@ -218,10 +218,10 @@ mysql -u laravel_user -p laravel_starter
 **Issue**: Nginx 502 Bad Gateway
 ```bash
 # Check PHP-FPM status
-sudo systemctl status php8.1-fpm
+sudo systemctl status php8.2-fpm
 
 # Check socket permissions
-ls -la /var/run/php/php8.1-fpm.sock
+ls -la /var/run/php/php8.2-fpm.sock
 ```
 
 **Issue**: Email not working

@@ -31,38 +31,38 @@ info() {
     echo -e "${BLUE}[INFO] $1${NC}"
 }
 
-# Install PHP 8.1
+# Install PHP 8.2
 install_php() {
-    log "Installing PHP 8.1 and extensions..."
+    log "Installing PHP 8.2 and extensions..."
     
     # Add PHP repository
     sudo add-apt-repository ppa:ondrej/php -y
     sudo apt update
     
-    # Install PHP 8.1 and common extensions
+    # Install PHP 8.2 and common extensions
     sudo apt install -y \
-        php8.1 \
-        php8.1-fpm \
-        php8.1-mysql \
-        php8.1-xml \
-        php8.1-curl \
-        php8.1-gd \
-        php8.1-mbstring \
-        php8.1-zip \
-        php8.1-intl \
-        php8.1-bcmath \
-        php8.1-soap \
-        php8.1-redis \
-        php8.1-cli \
-        php8.1-common \
-        php8.1-opcache \
-        php8.1-readline
+        php8.2 \
+        php8.2-fpm \
+        php8.2-mysql \
+        php8.2-xml \
+        php8.2-curl \
+        php8.2-gd \
+        php8.2-mbstring \
+        php8.2-zip \
+        php8.2-intl \
+        php8.2-bcmath \
+        php8.2-soap \
+        php8.2-redis \
+        php8.2-cli \
+        php8.2-common \
+        php8.2-opcache \
+        php8.2-readline
     
     # Configure PHP-FPM
-    sudo systemctl enable php8.1-fpm
-    sudo systemctl start php8.1-fpm
+    sudo systemctl enable php8.2-fpm
+    sudo systemctl start php8.2-fpm
     
-    log "PHP 8.1 installation completed"
+    log "PHP 8.2 installation completed"
     php -v
 }
 
@@ -152,13 +152,13 @@ configure_php() {
     log "Configuring PHP settings for Laravel..."
     
     # Update PHP configuration
-    sudo sed -i 's/upload_max_filesize = .*/upload_max_filesize = 100M/' /etc/php/8.1/fpm/php.ini
-    sudo sed -i 's/post_max_size = .*/post_max_size = 100M/' /etc/php/8.1/fpm/php.ini
-    sudo sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/8.1/fpm/php.ini
-    sudo sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/8.1/fpm/php.ini
+    sudo sed -i 's/upload_max_filesize = .*/upload_max_filesize = 100M/' /etc/php/8.2/fpm/php.ini
+    sudo sed -i 's/post_max_size = .*/post_max_size = 100M/' /etc/php/8.2/fpm/php.ini
+    sudo sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/8.2/fpm/php.ini
+    sudo sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php/8.2/fpm/php.ini
     
     # Restart PHP-FPM
-    sudo systemctl restart php8.1-fpm
+    sudo systemctl restart php8.2-fpm
     
     log "PHP configuration updated"
 }

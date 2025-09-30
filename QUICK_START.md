@@ -90,7 +90,7 @@ For your assignment, capture screenshots of:
 
 **Check application status:**
 ```bash
-sudo systemctl status nginx php8.1-fpm mariadb
+sudo systemctl status nginx php8.2-fpm mariadb
 ```
 
 **View application logs:**
@@ -101,7 +101,7 @@ tail -f /var/www/laravel-starter/storage/logs/laravel.log
 
 **Restart services:**
 ```bash
-sudo systemctl restart nginx php8.1-fpm mariadb
+sudo systemctl restart nginx php8.2-fpm mariadb
 ```
 
 ## ❗ Troubleshooting
