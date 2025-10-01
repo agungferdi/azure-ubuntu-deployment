@@ -66,7 +66,7 @@ install_dependencies() {
     sudo -u www-data npm install
     
     log "Building frontend assets..."
-    sudo -u www-data npm run production
+    sudo -u www-data npm run build
     
     log "Dependencies installed successfully"
 }

@@ -134,10 +134,10 @@ install_composer() {
 
 # Install Node.js and NPM
 install_nodejs() {
-    log "Installing Node.js 16.x and NPM..."
+    log "Installing Node.js 18.x and NPM..."
     
     # Add NodeSource repository
-    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
     
     # Install Node.js
     sudo apt install -y nodejs
