@@ -81,6 +81,9 @@ configure_laravel() {
     sudo -u www-data cp .env.example .env
     
     # Update .env file with database configuration
+    sudo -u www-data sed -i "s/DB_CONNECTION=.*/DB_CONNECTION=mysql/" .env
+    sudo -u www-data sed -i "s/DB_HOST=.*/DB_HOST=127.0.0.1/" .env
+    sudo -u www-data sed -i "s/DB_PORT=.*/DB_PORT=3306/" .env
     sudo -u www-data sed -i "s/DB_DATABASE=.*/DB_DATABASE=$DB_NAME/" .env
     sudo -u www-data sed -i "s/DB_USERNAME=.*/DB_USERNAME=$DB_USER/" .env
     sudo -u www-data sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$DB_PASS/" .env

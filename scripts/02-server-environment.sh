@@ -56,7 +56,8 @@ install_php() {
         php8.2-cli \
         php8.2-common \
         php8.2-opcache \
-        php8.2-readline
+        php8.2-readline \
+        php8.2-sqlite3
     
     # Configure PHP-FPM
     sudo systemctl enable php8.2-fpm
