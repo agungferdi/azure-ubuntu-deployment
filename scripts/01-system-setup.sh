@@ -100,6 +100,29 @@ install_docker() {
     info "You may need to log out and back in for Docker group membership to take effect"
 }
 
+# Configure firewall
+configure_firewall() {
+    log "Configuring firewall..."
+    
+    # Enable firewall
+    sudo ufw --force enable
+    
+    # Allow SSH (important to not lock yourself out)
+    sudo ufw allow ssh
+    sudo ufw allow 22/tcp
+    
+    # Allow HTTP and HTTPS
+    sudo ufw allow 80/tcp
+    sudo ufw allow 443/tcp
+    sudo ufw allow 'Nginx Full'
+    
+    # Install net-tools for network diagnostics
+    sudo apt install -y net-tools
+    
+    log "Firewall configuration completed"
+    sudo ufw status verbose
+}
+
 # Main function
 main() {
     log "Starting system setup..."
@@ -108,9 +131,11 @@ main() {
     update_system
     install_basic_tools
     install_docker
+    configure_firewall
     
     log "System setup completed successfully!"
     info "Please run 'newgrp docker' or log out and back in to use Docker without sudo"
+    info "Firewall is enabled with HTTP/HTTPS access allowed"
 }
 
 main "$@"

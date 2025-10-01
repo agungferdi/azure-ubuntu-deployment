@@ -5,23 +5,32 @@ This repository contains automation scripts to set up a complete Laravel develop
 ## 📋 Requirements Met
 
 ✅ **Server Environment:**
-- PHP 8.2
-- Nginx 1.18/1.21
-- MariaDB 10
-- Composer 2.2
-- NPM 16.x
+- PHP 8.2 (upgraded from 8.1 for Laravel Starter compatibility)
+- Nginx 1.18/1.21 with Laravel-optimized configuration
+- MariaDB 10 with automated user management
+- Composer 2.2+ for dependency management
+- Node.js 18.x & NPM (upgraded from 16.x for modern builds)
 
 ✅ **System Configuration:**
 - Timezone: Asia/Jakarta
-- System updates and upgrades
+- System updates and security patches
 - Git, Curl, ZIP, Python3 & Python3-pip
-- Docker installation
+- Docker installation with proper user permissions
+- UFW firewall with HTTP/HTTPS access configured
 
 ✅ **Laravel Application:**
-- Automated deployment of Laravel Starter
-- Database setup and migration
-- Nginx configuration
-- Email configuration for password reset
+- Automated deployment of Laravel Starter from GitHub
+- Database setup with migrations and seeding (including Faker)
+- Nginx virtual host configuration for Laravel
+- Email configuration for password reset (SendinBlue SMTP)
+- Proper file permissions for storage and cache directories
+- Asset compilation with NPM build scripts
+
+✅ **Security & Access:**
+- UFW firewall configuration for external access
+- Database user with limited privileges
+- Nginx security headers
+- Laravel security configurations
 
 ## 🚀 Quick Start
 
@@ -78,11 +87,12 @@ ubuntu-vm-laravel-setup/
 - **Docker**: Latest stable version with user permissions
 
 ### Server Stack
-- **PHP 8.2** with extensions: mysql, xml, curl, gd, mbstring, zip, intl, bcmath, soap, redis
+- **PHP 8.2** with extensions: mysql, xml, curl, gd, mbstring, zip, intl, bcmath, soap, redis, sqlite3
 - **Nginx**: Latest stable with Laravel configuration
 - **MariaDB 10**: With secure installation and Laravel database setup
-- **Composer 2.2**: Global installation
-- **Node.js 16.x & NPM**: For frontend asset compilation
+- **Composer 2.2**: Global installation with Faker dependency
+- **Node.js 18.x & NPM**: For frontend asset compilation
+- **Firewall**: UFW configured with HTTP/HTTPS access
 
 ### Laravel Application
 - **Repository**: [Laravel Starter](https://github.com/nasirkhan/laravel-starter)
@@ -108,6 +118,89 @@ After successful installation:
 4. **Categories & Tags**: Organize content
 5. **Comments System**: Add comments to posts
 6. **Password Reset**: "Forgot Password" functionality (requires email setup)
+
+## ⚠️ Common Issues & Solutions
+
+### Quick Fix Command
+If you encounter any issues, run the automated fix script:
+```bash
+curl -sSL https://raw.githubusercontent.com/agungferdi/azure-ubuntu-deployment/main/scripts/fix-common-issues.sh | bash
+```
+
+### Most Common Issues
+
+1. **"Class 'Faker\Factory' not found" Error**
+   - **Cause**: Missing Faker dependency for database seeding
+   - **Fix**: Automatically handled by scripts, or manually run:
+     ```bash
+     cd /var/www/laravel-starter
+     sudo -u www-data composer require fakerphp/faker --dev
+     ```
+
+2. **Database Connection Issues**
+   - **Cause**: Incorrect database credentials or configuration
+   - **Fix**: Check `/var/www/laravel-starter/.env` file for proper database settings
+
+3. **External Access Blocked**
+   - **Cause**: UFW firewall blocking HTTP traffic
+   - **Fix**: Automatically configured, or manually run:
+     ```bash
+     sudo ufw allow 80/tcp
+     sudo ufw allow 'Nginx Full'
+     ```
+
+4. **NPM Build Failures**
+   - **Cause**: Node.js version compatibility issues
+   - **Fix**: Scripts install Node.js 18.x specifically for compatibility
+
+5. **Permission Errors**
+   - **Cause**: Incorrect file ownership for Laravel directories
+   - **Fix**: Automatically handled, or manually run:
+     ```bash
+     sudo chown -R www-data:www-data /var/www/laravel-starter
+     sudo chmod -R 777 /var/www/laravel-starter/storage
+     ```
+
+For detailed troubleshooting, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
+
+## 🎯 Deployment Best Practices
+
+### Tested Configuration
+- **Ubuntu**: 20.04 LTS / 22.04 LTS / 24.04 LTS
+- **PHP**: 8.2 (required for Laravel Starter compatibility)
+- **Node.js**: 18.x (required for modern NPM packages)
+- **Database**: MariaDB 10.11+ (MySQL 8.0+ also compatible)
+
+### Pre-Deployment Checklist
+- [ ] VM has at least 2GB RAM and 20GB storage
+- [ ] User has sudo privileges
+- [ ] Internet connection is stable
+- [ ] Ports 80 and 443 are available for Nginx
+- [ ] No conflicting web servers (Apache, etc.) are running
+
+### Post-Deployment Verification
+- [ ] Laravel application loads at VM IP address
+- [ ] User registration/login works
+- [ ] Database seeding completed successfully
+- [ ] All Laravel features are functional
+- [ ] Email configuration works (if SMTP is configured)
+
+## 🔍 Lessons Learned from Real Deployment
+
+### Version Compatibility
+- **PHP 8.1 → 8.2**: Laravel Starter requires PHP 8.2+ for all dependencies
+- **Node.js 16 → 18**: Modern NPM packages need Node.js 18+ for builds
+- **Faker Dependency**: Must be explicitly installed for database seeding
+
+### Network Configuration
+- **Firewall Setup**: UFW must allow HTTP traffic for external access
+- **Nginx Configuration**: Laravel-specific settings required for proper routing
+- **Database Access**: Localhost vs 127.0.0.1 can cause connection issues
+
+### Build Process
+- **NPM Scripts**: Laravel Starter uses `npm run build` (not `npm run production`)
+- **Asset Compilation**: Requires Node.js 18+ for modern build tools
+- **Permission Management**: Laravel storage directories need 777 permissions
 
 ## 📧 Email Configuration
 

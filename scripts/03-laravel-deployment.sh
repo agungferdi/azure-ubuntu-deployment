@@ -62,6 +62,9 @@ install_dependencies() {
     cd $APP_DIR
     sudo -u www-data composer install --no-dev --optimize-autoloader
     
+    # Install Faker for database seeding
+    sudo -u www-data composer require fakerphp/faker --dev
+    
     log "Installing NPM dependencies..."
     sudo -u www-data npm install
     
@@ -82,11 +85,31 @@ configure_laravel() {
     
     # Update .env file with database configuration
     sudo -u www-data sed -i "s/DB_CONNECTION=.*/DB_CONNECTION=mysql/" .env
-    sudo -u www-data sed -i "s/DB_HOST=.*/DB_HOST=127.0.0.1/" .env
+    sudo -u www-data sed -i "s/DB_HOST=.*/DB_HOST=localhost/" .env
     sudo -u www-data sed -i "s/DB_PORT=.*/DB_PORT=3306/" .env
     sudo -u www-data sed -i "s/DB_DATABASE=.*/DB_DATABASE=$DB_NAME/" .env
     sudo -u www-data sed -i "s/DB_USERNAME=.*/DB_USERNAME=$DB_USER/" .env
     sudo -u www-data sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$DB_PASS/" .env
+    
+    # Ensure proper database configuration by adding lines if they don't exist
+    if ! grep -q "DB_CONNECTION=" .env; then
+        echo "DB_CONNECTION=mysql" | sudo -u www-data tee -a .env
+    fi
+    if ! grep -q "DB_HOST=" .env; then
+        echo "DB_HOST=localhost" | sudo -u www-data tee -a .env
+    fi
+    if ! grep -q "DB_PORT=" .env; then
+        echo "DB_PORT=3306" | sudo -u www-data tee -a .env
+    fi
+    if ! grep -q "DB_DATABASE=" .env; then
+        echo "DB_DATABASE=$DB_NAME" | sudo -u www-data tee -a .env
+    fi
+    if ! grep -q "DB_USERNAME=" .env; then
+        echo "DB_USERNAME=$DB_USER" | sudo -u www-data tee -a .env
+    fi
+    if ! grep -q "DB_PASSWORD=" .env; then
+        echo "DB_PASSWORD=$DB_PASS" | sudo -u www-data tee -a .env
+    fi
     
     # Set application URL (you may need to update this with your actual IP)
     sudo -u www-data sed -i "s|APP_URL=.*|APP_URL=http://$(hostname -I | awk '{print $1}')|" .env

@@ -6,8 +6,8 @@ For Ubuntu VM users who want to get Laravel Starter running quickly:
 
 ```bash
 # Clone and run
-git clone https://github.com/yourusername/ubuntu-vm-laravel-setup.git
-cd ubuntu-vm-laravel-setup
+git clone https://github.com/agungferdi/azure-ubuntu-deployment.git
+cd azure-ubuntu-deployment
 chmod +x setup.sh
 ./setup.sh
 ```
@@ -34,10 +34,10 @@ Before running the setup, ensure:
 After successful completion:
 
 1. **Fully configured server stack**:
-   - PHP 8.1 with all required extensions
+   - PHP 8.2 with all required extensions
    - Nginx web server with Laravel configuration
    - MariaDB database with sample data
-   - Composer and NPM for dependency management
+   - Composer and Node.js 18.x/NPM for dependency management
 
 2. **Deployed Laravel application**:
    - Laravel Starter app running at `http://your-vm-ip`
